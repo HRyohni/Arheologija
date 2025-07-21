@@ -1,0 +1,955 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ArchaeologicalDocumentationForm</class>
+ <widget class="QDialog" name="ArchaeologicalDocumentationForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Archaeological Documentation</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+    QDialog { background-color: #f5f5f5; }
+    QGroupBox {
+      font-weight: bold;
+      border: 1px solid #cccccc;
+      border-radius: 6px;
+      margin-top: 12px;
+      padding-top: 10px;
+     background-color: #e0e0e0;
+
+    }
+    QGroupBox::title {
+      subcontrol-origin: margin;
+      left: 10px;
+      padding: 0 5px 0 5px;
+    }
+    QLabel {
+      font-size: 11pt;
+    }
+
+    QLineEdit, QTextEdit, QComboBox, QSpinBox, QDoubleSpinBox {
+      border: 1px solid #aaaaaa;
+      border-radius: 4px;
+      padding: 5px;
+    }
+    QPushButton {
+      background-color: #2980b9;
+      color: white;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-weight: bold;
+    }
+    QLabel:hover {
+      color: red;
+    }
+    QPushButton:hover {
+      background-color: #3498db;
+    }
+   </string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabBasicInfo">
+      <attribute name="title">
+       <string>Basic Information</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QGroupBox" name="groupBoxIdentification">
+         <property name="title">
+          <string>Identification</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelSJNumber">
+            <property name="text">
+             <string>Stratigrafska Jedinica Br.:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="spinBoxSJNumber">
+            <property name="minimum">
+             <number>1</number>
+            </property>
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="labelSJType">
+            <property name="text">
+             <string>Vrsta SJ:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QComboBox" name="comboBoxSJType">
+            <item>
+             <property name="text">
+              <string>sloj</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>ukop</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>struktura</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>zapuna</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelLocalitet">
+            <property name="text">
+             <string>Lokalitet:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEditLocalitet"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="labelDate">
+            <property name="text">
+             <string>Datum:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QDateEdit" name="dateEdit">
+            <property name="calendarPopup">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxLocation">
+         <property name="title">
+          <string>Location</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_2">
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelSonda">
+            <property name="text">
+             <string>Sonda:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="spinBoxSonda">
+            <property name="maximum">
+             <number>999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="labelSektor">
+            <property name="text">
+             <string>Sektor:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLineEdit" name="lineEditSektor"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelKvadrat">
+            <property name="text">
+             <string>Kvadrat:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEditKvadrat"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="labelAbsHeight">
+            <property name="text">
+             <string>Apsolutna visina:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxAbsHeight">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>9999.999</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelLowestPoint">
+            <property name="text">
+             <string>Najniža točka:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxLowestPoint">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>9999.999</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="labelHighestPoint">
+            <property name="text">
+             <string>Najviša točka:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxHighestPoint">
+            <property name="decimals">
+             <number>3</number>
+            </property>
+            <property name="maximum">
+             <double>9999.999</double>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxDimensions">
+         <property name="title">
+          <string>Dimensions and Characteristics</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_3">
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelShape">
+            <property name="text">
+             <string>Oblik:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="comboBoxShape">
+            <item>
+             <property name="text">
+              <string>pravilni</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>nepravilni</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>kružni</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>četvrtasti</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="labelLength">
+            <property name="text">
+             <string>Dužina (m):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxLength">
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <double>999.99</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelWidth">
+            <property name="text">
+             <string>Širina (m):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxWidth">
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <double>999.99</double>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="labelDiameter">
+            <property name="text">
+             <string>Promjer (m):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QDoubleSpinBox" name="doubleSpinBoxDiameter">
+            <property name="decimals">
+             <number>2</number>
+            </property>
+            <property name="maximum">
+             <double>999.99</double>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelComposition">
+            <property name="text">
+             <string>Sastav:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEditComposition"/>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="labelConsistency">
+            <property name="text">
+             <string>Konzistencija:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLineEdit" name="lineEditConsistency"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelColor">
+            <property name="text">
+             <string>Boja (Munsell):</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="3">
+           <widget class="QLineEdit" name="lineEditColor"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabDescription">
+      <attribute name="title">
+       <string>Description</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QGroupBox" name="groupBoxDesc">
+         <property name="title">
+          <string>Description</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="labelDescription">
+            <property name="text">
+             <string>OPIS:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTextEdit" name="textEditDescription">
+            <property name="placeholderText">
+             <string>Enter a detailed description of the stratigraphic unit...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxStratigraphicRelations">
+         <property name="title">
+          <string>Stratigraphic Relations</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_4">
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelSJAbove">
+            <property name="text">
+             <string>SJ iznad:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="lineEditSJAbove"/>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="labelCuts">
+            <property name="text">
+             <string>Sječe:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLineEdit" name="lineEditCuts"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelSJBelow">
+            <property name="text">
+             <string>SJ ispod:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEditSJBelow"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="labelCutBy">
+            <property name="text">
+             <string>Presječeno od:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLineEdit" name="lineEditCutBy"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelFilledWith">
+            <property name="text">
+             <string>Zapunjena sa SJ:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="lineEditFilledWith"/>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLabel" name="labelComponent">
+            <property name="text">
+             <string>Sastavni dio:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QLineEdit" name="lineEditComponent"/>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelFills">
+            <property name="text">
+             <string>Zapunjava SJ:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="lineEditFills"/>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLabel" name="labelConnectedWith">
+            <property name="text">
+             <string>Povezana sa SJ:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QLineEdit" name="lineEditConnectedWith"/>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="labelAdjacentTo">
+            <property name="text">
+             <string>Uz:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="lineEditAdjacentTo"/>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLabel" name="labelSimilarTo">
+            <property name="text">
+             <string>Slična s SJ:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QLineEdit" name="lineEditSimilarTo"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabFindings">
+      <attribute name="title">
+       <string>Findings</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QGroupBox" name="groupBoxFindings">
+         <property name="title">
+          <string>Findings</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0" colspan="4">
+           <widget class="QLabel" name="labelFindings">
+            <property name="font">
+             <font>
+              <pointsize>11</pointsize>
+              <bold>true</bold>
+             </font>
+            </property>
+            <property name="text">
+             <string>NALAZI</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelCeramics">
+            <property name="text">
+             <string>Keramika:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="comboBoxCeramics">
+            <item>
+             <property name="text">
+              <string>-</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>N</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="lineEditCeramicsNotes">
+            <property name="placeholderText">
+             <string>Notes...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelBrick">
+            <property name="text">
+             <string>Opeka:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="comboBoxBrick">
+            <item>
+             <property name="text">
+              <string>-</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>N</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="lineEditBrickNotes">
+            <property name="placeholderText">
+             <string>Notes...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelClay">
+            <property name="text">
+             <string>Ljep:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QComboBox" name="comboBoxClay">
+            <item>
+             <property name="text">
+              <string>-</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>N</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="lineEditClayNotes">
+            <property name="placeholderText">
+             <string>Notes...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="labelGlass">
+            <property name="text">
+             <string>Staklo:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QComboBox" name="comboBoxGlass">
+            <item>
+             <property name="text">
+              <string>-</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>N</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="lineEditGlassNotes">
+            <property name="placeholderText">
+             <string>Notes...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QLabel" name="labelMetal">
+            <property name="text">
+             <string>Metal:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QComboBox" name="comboBoxMetal">
+            <item>
+             <property name="text">
+              <string>-</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>N</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="5" column="2">
+           <widget class="QLineEdit" name="lineEditMetalNotes">
+            <property name="placeholderText">
+             <string>Notes...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="labelWood">
+            <property name="text">
+             <string>Drvo:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
+           <widget class="QComboBox" name="comboBoxWood">
+            <item>
+             <property name="text">
+              <string>-</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>U</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="lineEditWoodNotes">
+            <property name="placeholderText">
+             <string>Notes...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="labelCharcoal">
+            <property name="text">
+             <string>Ugljen:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QComboBox" name="comboBoxCharcoal">
+            <item>
+             <property name="text">
+              <string>-</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>U</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLineEdit" name="lineEditCharcoalNotes">
+            <property name="placeholderText">
+             <string>Notes...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="labelBones">
+            <property name="text">
+             <string>Kosti:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QComboBox" name="comboBoxBones">
+            <item>
+             <property name="text">
+              <string>-</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>D</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>N</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QLineEdit" name="lineEditBonesNotes">
+            <property name="placeholderText">
+             <string>Notes...</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="labelOtherFindings">
+            <property name="text">
+             <string>Ostali nalazi:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1" colspan="2">
+           <widget class="QLineEdit" name="lineEditOtherFindings"/>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="labelSpecialFindings">
+            <property name="text">
+             <string>Posebni nalazi:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="1" colspan="2">
+           <widget class="QLineEdit" name="lineEditSpecialFindings"/>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="labelSamples">
+            <property name="text">
+             <string>Uzorci:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1" colspan="2">
+           <widget class="QLineEdit" name="lineEditSamples"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxMedia">
+         <property name="title">
+          <string>Media</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_6">
+          <item row="0" column="0">
+           <widget class="QLabel" name="labelDiaryPage">
+            <property name="text">
+             <string>Stranica dnevnika:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QSpinBox" name="spinBoxDiaryPage">
+            <property name="maximum">
+             <number>9999</number>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLabel" name="labelPhotoNumber">
+            <property name="text">
+             <string>Foto. br.:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QLineEdit" name="lineEditPhotoNumber"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="labelArchaeologist">
+            <property name="text">
+             <string>Arheolog:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="lineEditArchaeologist"/>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLabel" name="labelPhotographer">
+            <property name="text">
+             <string>Snimio:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QLineEdit" name="lineEditPhotographer"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="labelNotes">
+            <property name="text">
+             <string>Napomene:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1" colspan="3">
+           <widget class="QTextEdit" name="textEditNotes">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>80</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayoutButtons">
+     <item>
+      <widget class="QPushButton" name="pushButtonImport">
+       <property name="text">
+        <string>Import Data</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/import.png</normaloff>:/icons/import.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonExport">
+       <property name="text">
+        <string>Export to PDF</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/export_pdf.png</normaloff>:/icons/export_pdf.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonSave">
+       <property name="text">
+        <string>Save Record</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/save.png</normaloff>:/icons/save.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButtonCancel">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>:/icons/cancel.png</normaloff>:/icons/cancel.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
