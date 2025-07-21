@@ -529,270 +529,174 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="labelCeramics">
-            <property name="text">
-             <string>Keramika:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="comboBoxCeramics">
-            <item>
-             <property name="text">
-              <string>-</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>D</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>N</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLineEdit" name="lineEditCeramicsNotes">
-            <property name="placeholderText">
-             <string>Notes...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="labelBrick">
-            <property name="text">
-             <string>Opeka:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="comboBoxBrick">
-            <item>
-             <property name="text">
-              <string>-</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>D</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>N</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="lineEditBrickNotes">
-            <property name="placeholderText">
-             <string>Notes...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="labelClay">
-            <property name="text">
-             <string>Ljep:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QComboBox" name="comboBoxClay">
-            <item>
-             <property name="text">
-              <string>-</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>D</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>N</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="lineEditClayNotes">
-            <property name="placeholderText">
-             <string>Notes...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="labelGlass">
-            <property name="text">
-             <string>Staklo:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="comboBoxGlass">
-            <item>
-             <property name="text">
-              <string>-</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>D</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>N</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLineEdit" name="lineEditGlassNotes">
-            <property name="placeholderText">
-             <string>Notes...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="labelMetal">
-            <property name="text">
-             <string>Metal:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QComboBox" name="comboBoxMetal">
-            <item>
-             <property name="text">
-              <string>-</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>D</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>N</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QLineEdit" name="lineEditMetalNotes">
-            <property name="placeholderText">
-             <string>Notes...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="labelWood">
-            <property name="text">
-             <string>Drvo:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QComboBox" name="comboBoxWood">
-            <item>
-             <property name="text">
-              <string>-</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>D</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>U</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="6" column="2">
-           <widget class="QLineEdit" name="lineEditWoodNotes">
-            <property name="placeholderText">
-             <string>Notes...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="labelCharcoal">
-            <property name="text">
-             <string>Ugljen:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QComboBox" name="comboBoxCharcoal">
-            <item>
-             <property name="text">
-              <string>-</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>D</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>U</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QLineEdit" name="lineEditCharcoalNotes">
-            <property name="placeholderText">
-             <string>Notes...</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="labelBones">
-            <property name="text">
-             <string>Kosti:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QComboBox" name="comboBoxBones">
-            <item>
-             <property name="text">
-              <string>-</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>D</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string>N</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="8" column="2">
-           <widget class="QLineEdit" name="lineEditBonesNotes">
-            <property name="placeholderText">
-             <string>Notes...</string>
-            </property>
-           </widget>
-          </item>
+         <item row="1" column="0">
+ <widget class="QLabel" name="labelCeramics">
+  <property name="text">
+   <string>Keramika:</string>
+  </property>
+ </widget>
+</item>
+<item row="1" column="1">
+ <widget class="QCheckBox" name="checkBoxCeramics">
+  <property name="text">
+   <string></string>
+  </property>
+ </widget>
+</item>
+<item row="1" column="2">
+ <widget class="QLineEdit" name="lineEditCeramicsNotes">
+  <property name="placeholderText">
+   <string>Notes...</string>
+  </property>
+ </widget>
+</item>
+<item row="2" column="0">
+ <widget class="QLabel" name="labelBrick">
+  <property name="text">
+   <string>Opeka:</string>
+  </property>
+ </widget>
+</item>
+<item row="2" column="1">
+ <widget class="QCheckBox" name="checkBoxBrick">
+  <property name="text">
+   <string></string>
+  </property>
+ </widget>
+</item>
+<item row="2" column="2">
+ <widget class="QLineEdit" name="lineEditBrickNotes">
+  <property name="placeholderText">
+   <string>Notes...</string>
+  </property>
+ </widget>
+</item>
+<item row="3" column="0">
+ <widget class="QLabel" name="labelClay">
+  <property name="text">
+   <string>Ljep:</string>
+  </property>
+ </widget>
+</item>
+<item row="3" column="1">
+ <widget class="QCheckBox" name="checkBoxClay">
+  <property name="text">
+   <string></string>
+  </property>
+ </widget>
+</item>
+<item row="3" column="2">
+ <widget class="QLineEdit" name="lineEditClayNotes">
+  <property name="placeholderText">
+   <string>Notes...</string>
+  </property>
+ </widget>
+</item>
+<item row="4" column="0">
+ <widget class="QLabel" name="labelGlass">
+  <property name="text">
+   <string>Staklo:</string>
+  </property>
+ </widget>
+</item>
+<item row="4" column="1">
+ <widget class="QCheckBox" name="checkBoxGlass">
+  <property name="text">
+   <string></string>
+  </property>
+ </widget>
+</item>
+<item row="4" column="2">
+ <widget class="QLineEdit" name="lineEditGlassNotes">
+  <property name="placeholderText">
+   <string>Notes...</string>
+  </property>
+ </widget>
+</item>
+<item row="5" column="0">
+ <widget class="QLabel" name="labelMetal">
+  <property name="text">
+   <string>Metal:</string>
+  </property>
+ </widget>
+</item>
+<item row="5" column="1">
+ <widget class="QCheckBox" name="checkBoxMetal">
+  <property name="text">
+   <string></string>
+  </property>
+ </widget>
+</item>
+<item row="5" column="2">
+ <widget class="QLineEdit" name="lineEditMetalNotes">
+  <property name="placeholderText">
+   <string>Notes...</string>
+  </property>
+ </widget>
+</item>
+<item row="6" column="0">
+ <widget class="QLabel" name="labelWood">
+  <property name="text">
+   <string>Drvo:</string>
+  </property>
+ </widget>
+</item>
+<item row="6" column="1">
+ <widget class="QCheckBox" name="checkBoxWood">
+  <property name="text">
+   <string></string>
+  </property>
+ </widget>
+</item>
+<item row="6" column="2">
+ <widget class="QLineEdit" name="lineEditWoodNotes">
+  <property name="placeholderText">
+   <string>Notes...</string>
+  </property>
+ </widget>
+</item>
+<item row="7" column="0">
+ <widget class="QLabel" name="labelCharcoal">
+  <property name="text">
+   <string>Ugljen:</string>
+  </property>
+ </widget>
+</item>
+<item row="7" column="1">
+ <widget class="QCheckBox" name="checkBoxCharcoal">
+  <property name="text">
+   <string></string>
+  </property>
+ </widget>
+</item>
+<item row="7" column="2">
+ <widget class="QLineEdit" name="lineEditCharcoalNotes">
+  <property name="placeholderText">
+   <string>Notes...</string>
+  </property>
+ </widget>
+</item>
+<item row="8" column="0">
+ <widget class="QLabel" name="labelBones">
+  <property name="text">
+   <string>Kosti:</string>
+  </property>
+ </widget>
+</item>
+<item row="8" column="1">
+ <widget class="QCheckBox" name="checkBoxBones">
+  <property name="text">
+   <string></string>
+  </property>
+ </widget>
+</item>
+<item row="8" column="2">
+ <widget class="QLineEdit" name="lineEditBonesNotes">
+  <property name="placeholderText">
+   <string>Notes...</string>
+  </property>
+ </widget>
+</item>
           <item row="9" column="0">
            <widget class="QLabel" name="labelOtherFindings">
             <property name="text">
