@@ -19,7 +19,7 @@ class ArheologijaPlusDialog(QWidget, FORM_CLASS):
             'SJNumber': self.spinBoxSJNumber.value(),
             'SJType': self.comboBoxSJType.currentText(),
             'Lokalitet': self.lineEditLocalitet.text(),
-            'Datum': self.dateEdit.date().toString("yyyy-MM-dd"),
+            'Datum': self.dateEdit.date().toString("dd-MM-yyyy"),
             'Sonda': self.spinBoxSonda.value(),
             'Sektor': self.lineEditSektor.text(),
             'Kvadrat': self.lineEditKvadrat.text(),
