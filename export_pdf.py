@@ -44,6 +44,7 @@ def export_to_pdf(dlg, iface):
     styleSmall = ParagraphStyle('Small', parent=styleN, fontSize=8, leading=9)
 
     elements = []
+    data = dlg.get_data()
 
     # --- TOP RIGHT SJ BOX ---
     sj_box_data = [["SJ"], [f"List br."]]
@@ -72,8 +73,11 @@ def export_to_pdf(dlg, iface):
 
     # --- LOKALITET, VRSTA SJ, DATUM ROW ---
     top_row_data = [
-        [f"LOKALITET:\n{dlg.lineEditLocalitet.text()}", "Vrsta SJ sloj",
-         f"Datum:\n{dlg.dateEdit.date().toString('d. M. yyyy.')}"]
+        [
+            f"LOKALITET:\n{data['Lokalitet']}",
+            f"Vrsta SJ {data['SJType']}",
+            f"Datum:\n{dlg.dateEdit.date().toString('d. M. yyyy.')}",
+        ]
     ]
     top_row_table = Table(top_row_data, colWidths=[90 * mm, 50 * mm, 40 * mm], rowHeights=[12 * mm])
     top_row_table.setStyle(TableStyle([
@@ -90,7 +94,19 @@ def export_to_pdf(dlg, iface):
 
     # --- SONDA, SEKTOR, KVADRAT, VISINA ROW ---
     location_data = [
-        ["Sonda\n2", "Sektor", "Kvadrat", "Apsolutna visina najviše točke\n\nVisina\n\nApsolutna visina najniže točke"]
+        [
+            f"Sonda\n{data['Sonda']}",
+            f"Sektor\n{data['Sektor']}",
+            f"Kvadrat\n{data['Kvadrat']}",
+            (
+                "Apsolutna visina najviše točke\n"
+                f"{data['HighestPoint']} m\n"
+                "Visina\n"
+                f"{data['AbsHeight']} m\n"
+                "Apsolutna visina najniže točke\n"
+                f"{data['LowestPoint']} m"
+            ),
+        ]
     ]
     location_table = Table(location_data, colWidths=[30 * mm, 30 * mm, 30 * mm, 90 * mm], rowHeights=[25 * mm])
     location_table.setStyle(TableStyle([
@@ -122,7 +138,12 @@ def export_to_pdf(dlg, iface):
     ]))
 
     # Separate table for the bottom row with 4 columns
-    char_bottom_data = [["Oblik\nnepravilni", "Dužina\n2.4 m", "Širina\n1.7 m", "Promjer"]]
+    char_bottom_data = [[
+        f"Oblik\n{data['Shape']}",
+        f"Dužina\n{data['Length']} m",
+        f"Širina\n{data['Width']} m",
+        f"Promjer\n{data['Diameter']} m",
+    ]]
     char_bottom_table = Table(char_bottom_data, colWidths=[45 * mm, 45 * mm, 45 * mm, 45 * mm], rowHeights=[15 * mm])
     char_bottom_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
@@ -135,8 +156,8 @@ def export_to_pdf(dlg, iface):
 
     # First part of characteristics
     char_top_data = [
-        [f"Sastav: {dlg.lineEditComposition.text()}", f"Boja(Munsell)\n{dlg.lineEditColor.text()}"],
-        [f"Konzistencija: {dlg.lineEditConsistency.text()}", ""]
+        [f"Sastav: {data['Composition']}", f"Boja(Munsell)\n{data['Color']}",],
+        [f"Konzistencija: {data['Consistency']}", ""],
     ]
     char_top_table = Table(char_top_data, colWidths=[90 * mm, 90 * mm], rowHeights=[10 * mm, 10 * mm])
     char_top_table.setStyle(TableStyle([
@@ -152,7 +173,7 @@ def export_to_pdf(dlg, iface):
     elements.append(char_bottom_table)
 
     # --- OPIS SECTION ---
-    opis_data = [[f"OPIS\n{dlg.textEditDescription.toPlainText()}"]]
+    opis_data = [[f"OPIS\n{data['Description']}"]]
     opis_table = Table(opis_data, colWidths=[180 * mm], rowHeights=[25 * mm])
     opis_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
@@ -167,16 +188,16 @@ def export_to_pdf(dlg, iface):
     # --- STRATIGRAFSKI ODNOSI ---
     strat_data = [
         ["STRATIGRAFSKI ODNOSI", "", ""],
-        ["SJ iznad", "000", ""],
-        ["SJ ispod", "020", ""],
-        ["Sječe", "", ""],
-        ["Presječeno od", "", ""],
-        ["Zapunjena sa SJ", "", ""],
-        ["Zapunjava SJ", "", ""],
-        ["Sastavni dio", "", ""],
-        ["Povezana sa SJ", "002", ""],
-        ["Uz", "001", ""],
-        ["Slična s SJ", "", ""]
+        ["SJ iznad", data['SJAbove'], ""],
+        ["SJ ispod", data['SJBelow'], ""],
+        ["Sječe", data['Cuts'], ""],
+        ["Presječeno od", data['CutBy'], ""],
+        ["Zapunjena sa SJ", data['FilledWith'], ""],
+        ["Zapunjava SJ", data['Fills'], ""],
+        ["Sastavni dio", data['Component'], ""],
+        ["Povezana sa SJ", data['ConnectedWith'], ""],
+        ["Uz", data['AdjacentTo'], ""],
+        ["Slična s SJ", data['SimilarTo'], ""],
     ]
     strat_table = Table(strat_data, colWidths=[60 * mm, 60 * mm, 60 * mm], rowHeights=[8 * mm] * 11)
     strat_table.setStyle(TableStyle([
@@ -192,14 +213,14 @@ def export_to_pdf(dlg, iface):
 
     # --- NALAZI TABLE ---
     nalazi_data = [
-        ["Keramika N -", "5, 17, 48", "Ostali nalazi:"],
-        ["Opeka    N -", "", ""],
-        ["Ljep     N -", "", "Posebni nalazi:"],
-        ["Staklo   N -", "", "PN -"],
-        ["Metal    N -", "", "Uzorci:"],
-        ["Drvo     U -", "", ""],
-        ["Ugljen   U-", "3", "Napomene:"],
-        ["Kosti    N-", "2, 19, 35", ""]
+        [f"Keramika {data['Ceramics']}", data['CeramicsNotes'], f"Ostali nalazi:\n{data['OtherFindings']}"],
+        [f"Opeka    {data['Brick']}", data['BrickNotes'], ""],
+        [f"Ljep     {data['Clay']}", data['ClayNotes'], "Posebni nalazi:"],
+        [f"Staklo   {data['Glass']}", data['GlassNotes'], f"PN - {data['SpecialFindings']}"],
+        [f"Metal    {data['Metal']}", data['MetalNotes'], f"Uzorci:\n{data['Samples']}"],
+        [f"Drvo     {data['Wood']}", data['WoodNotes'], ""],
+        [f"Ugljen   {data['Charcoal']}", data['CharcoalNotes'], "Napomene:"],
+        [f"Kosti    {data['Bones']}", data['BonesNotes'], data['Notes']],
     ]
 
     # Create NALAZI as a vertical label
@@ -241,8 +262,16 @@ def export_to_pdf(dlg, iface):
 
     # --- DOCUMENTATION SECTION ---
     doc_data = [
-        ["", "Stranica dnevnika\n14", "Arheolog:\nKG"],
-        ["Foto: br.", "Snimio:", ""]
+        [
+            "",
+            f"Stranica dnevnika\n{data['DiaryPage']}",
+            f"Arheolog:\n{data['Archaeologist']}",
+        ],
+        [
+            f"Foto: br.\n{data['PhotoNumber']}",
+            f"Snimio:\n{data['Photographer']}",
+            "",
+        ],
     ]
     doc_table = Table(doc_data, colWidths=[60 * mm, 60 * mm, 60 * mm], rowHeights=[15 * mm, 10 * mm])
     doc_table.setStyle(TableStyle([
