@@ -1,0 +1,22 @@
+
+
+Uspješno sam implementirao neke od ključnih funkcionalnosti, pa bih se volio konzultirati s Vama oko najbolje strukture za pisanje završnog rada.
+Plugin, nazvan "ArheologijaPlus", služi kao rješenje za digitalizaciju procesa dokumentiranja arheoloških stratigrafskih jedinica (SJ). Cilj je bio zamijeniti tradicionalni, papirnati način rada integriranim alatom unutar GIS aplikacije.
+
+U sklopu projekta dodao sam sljedeće funkcionalnosti:
+
+Automatsko stvaranje baze podataka: Ovo osigurava standardiziranu i trajnu pohranu podataka u njihovu bazu podataka.
+
+Digitalni formular za unos: Izrađeno je korisničko sučelje s tabovima koje služi kao digitalni obrazac za detaljan unos svih podataka.
+
+Automatizirani izvoz u PDF: Plugin može podatke trenutno učitane u formularu izvesti u PDF dokument
+
+S obzirom na navedeno, u nedoumici sam oko najboljeg pristupa za strukturiranje seminara. Imam nekoliko ideja pa bih cijenio Vaš savjet:
+
+Tehnički pristup: Da u seminaru detaljno prikažem i objasnim ključne dijelove Python koda?
+
+Hibridni pristup: Da započnem s objašnjenjem problema i svrha aplikacije, zatim predstavim svoj plugin kao praktičan primjer. Mogao bih pokazati samo najbitnije isječke koda koji ilustriraju ključne koncepte, bez da ulazim u svaki detalj
+
+Koji od ovih pristupa smatrate najprikladnijim? Ili možda imate neku drugu sugestiju? Šta mislite AI kao pomoć u projektu
+
+Hvala Vam unaprijed na vremenu i savjetima.

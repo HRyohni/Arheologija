@@ -11,9 +11,12 @@ from reportlab.pdfbase.ttfonts import TTFont
 
 def export_to_pdf(dlg, iface):
     """
-    Exports the archaeological stratigraphic unit data to a PDF document,
-    matching the layout of the provided standard form exactly.
+    Izvozi podatke o arheološkoj stratigrafskoj jedinici u PDF dokument,
+    kombinirajući dinamičko dohvaćanje podataka s točnim vizualnim rasporedom.
     """
+    # --- DOHVATI SVE PODATKE IZ DIJALOGA ---
+    data = dlg.get_data()
+
     fileName, _ = QFileDialog.getSaveFileName(
         dlg, "Export to PDF", "", "PDF Files (*.pdf)"
     )
@@ -22,7 +25,7 @@ def export_to_pdf(dlg, iface):
     if not fileName.endswith('.pdf'):
         fileName += '.pdf'
 
-    # --- FONT REGISTRATION ---
+    # --- REGISTRACIJA FONTOVA ---
     plugin_dir = os.path.dirname(__file__)
     font_path_regular = os.path.join(plugin_dir, 'DejaVuSans.ttf')
     font_path_bold = os.path.join(plugin_dir, 'DejaVuSans-Bold.ttf')
@@ -38,112 +41,97 @@ def export_to_pdf(dlg, iface):
     doc = SimpleDocTemplate(fileName, pagesize=A4, rightMargin=15 * mm, leftMargin=15 * mm, topMargin=15 * mm,
                             bottomMargin=10 * mm)
 
-    # --- STYLES ---
+    # --- STILOVI ---
     styleN = ParagraphStyle('Normal', fontName='DejaVu-Sans', fontSize=9, leading=11)
-    styleB = ParagraphStyle('Bold', parent=styleN, fontName='DejaVu-Sans-Bold')
+    styleWrap = ParagraphStyle('Wrap', parent=styleN, alignment=0)
     styleSmall = ParagraphStyle('Small', parent=styleN, fontSize=8, leading=9)
 
     elements = []
 
-    # --- TOP RIGHT SJ BOX ---
-    sj_box_data = [["SJ"], [f"List br."]]
+    # --- GORNJI DESNI SJ BOX ---
+    sj_box_data = [
+        [Paragraph(f"<b>SJ</b><br/>{data.get('SJ_br', '')}", styleN)],
+        [Paragraph(f"List br.<br/>{data.get('dnevnik_str', '')}", styleN)]
+    ]
     sj_box_table = Table(sj_box_data, colWidths=[20 * mm], rowHeights=[8 * mm, 8 * mm])
     sj_box_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans-Bold'),
-        ('FONTSIZE', (0, 0), (-1, -1), 8)
     ]))
 
-    # --- HEADER WITH SJ BOX ---
+    # --- ZAGLAVLJE SA SJ BOXOM ---
     header_data = [
-        [f"STRATIGRAFSKA JEDINICA br. ____{dlg.spinBoxSJNumber.value()}____", sj_box_table]
+        [Paragraph(f"STRATIGRAFSKA JEDINICA br. ____{data.get('SJ_br', '')}____",
+                   ParagraphStyle('H1', fontName='DejaVu-Sans-Bold', fontSize=11)),
+         sj_box_table]
     ]
     header_table = Table(header_data, colWidths=[160 * mm, 20 * mm])
     header_table.setStyle(TableStyle([
         ('VALIGN', (0, 0), (0, 0), 'BOTTOM'),
         ('VALIGN', (1, 0), (1, 0), 'TOP'),
-        ('FONTNAME', (0, 0), (0, 0), 'DejaVu-Sans-Bold'),
-        ('FONTSIZE', (0, 0), (0, 0), 11)
     ]))
     elements.append(header_table)
     elements.append(Spacer(1, 3 * mm))
 
-    # --- LOKALITET, VRSTA SJ, DATUM ROW ---
+    # --- RED: LOKALITET, VRSTA SJ, DATUM ---
+    datum_za_pdf = data.get('datum').toString("d. M. yyyy.") if data.get('datum') else ''
     top_row_data = [
-        [f"LOKALITET:\n{dlg.lineEditLocalitet.text()}", "Vrsta SJ sloj",
-         f"Datum:\n{dlg.dateEdit.date().toString('d. M. yyyy.')}"]
+        [Paragraph(f"<b>LOKALITET:</b><br/>{data.get('lokalitet', '')}", styleWrap),
+         Paragraph(f"<b>Vrsta SJ:</b><br/>{data.get('SJ_vrsta', '')}", styleWrap),
+         Paragraph(f"<b>Datum:</b><br/>{datum_za_pdf}", styleWrap)]
     ]
     top_row_table = Table(top_row_data, colWidths=[90 * mm, 50 * mm, 40 * mm], rowHeights=[12 * mm])
     top_row_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('FONTNAME', (0, 0), (0, 0), 'DejaVu-Sans-Bold'),
-        ('FONTNAME', (1, 0), (1, 0), 'DejaVu-Sans'),
-        ('FONTNAME', (2, 0), (2, 0), 'DejaVu-Sans-Bold'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('LEFTPADDING', (0, 0), (-1, -1), 3),
         ('TOPPADDING', (0, 0), (-1, -1), 3)
     ]))
     elements.append(top_row_table)
 
-    # --- SONDA, SEKTOR, KVADRAT, VISINA ROW ---
+    # --- RED: SONDA, SEKTOR, KVADRAT, VISINA ---
+    location_text = (f"Apsolutna visina najviše točke: {data.get('najvisa_tocka', '')}<br/>"
+                     f"Visina: {data.get('aps_visina', '')}<br/>"
+                     f"Apsolutna visina najniže točke: {data.get('najniza_tocka', '')}")
     location_data = [
-        ["Sonda\n2", "Sektor", "Kvadrat", "Apsolutna visina najviše točke\n\nVisina\n\nApsolutna visina najniže točke"]
+        [Paragraph(f"Sonda<br/>{data.get('sonda', '')}", styleWrap),
+         Paragraph(f"Sektor<br/>{data.get('sektor', '')}", styleWrap),
+         Paragraph(f"Kvadrat<br/>{data.get('kvadrat', '')}", styleWrap),
+         Paragraph(location_text, styleWrap)]
     ]
     location_table = Table(location_data, colWidths=[30 * mm, 30 * mm, 30 * mm, 90 * mm], rowHeights=[25 * mm])
     location_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('LEFTPADDING', (0, 0), (-1, -1), 3),
         ('TOPPADDING', (0, 0), (-1, -1), 3)
     ]))
     elements.append(location_table)
 
-    # --- CHARACTERISTICS TABLE ---
-    char_data = [
-        [f"Sastav: {dlg.lineEditComposition.text()}", f"Boja(Munsell)\n{dlg.lineEditColor.text()}"],
-        [f"Konzistencija: {dlg.lineEditConsistency.text()}", ""],
-        ["Oblik\nnepravilni", "Dužina\n2.4 m", "Širina\n1.7 m", "Promjer"]
+    # --- TABLICA KARAKTERISTIKA ---
+    char_top_data = [
+        [Paragraph(f"Sastav: {data.get('sastav', '')}", styleWrap)],
+        [Paragraph(f"Konzistencija: {data.get('konzistencija', '')}", styleWrap),
+         Paragraph(f"Boja(Munsell):<br/>{data.get('boja_munsell', '')}", styleWrap)],
     ]
-    char_table = Table(char_data, colWidths=[90 * mm, 90 * mm, 0, 0])
-    char_table.setStyle(TableStyle([
-        ('GRID', (0, 0), (1, 2), 1, colors.black),
-        ('SPAN', (0, 0), (1, 0)),
-        ('SPAN', (0, 1), (1, 1)),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
-        ('LEFTPADDING', (0, 0), (-1, -1), 3),
+    char_top_table = Table(char_top_data, colWidths=[90 * mm, 90 * mm], rowHeights=[10 * mm, 10 * mm])
+    char_top_table.setStyle(TableStyle([
+        ('GRID', (0, 0), (-1, -1), 1, colors.black), ('SPAN', (0, 0), (1, 0)),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'), ('LEFTPADDING', (0, 0), (-1, -1), 3),
         ('TOPPADDING', (0, 0), (-1, -1), 3)
     ]))
 
-    # Separate table for the bottom row with 4 columns
-    char_bottom_data = [["Oblik\nnepravilni", "Dužina\n2.4 m", "Širina\n1.7 m", "Promjer"]]
+    char_bottom_data = [
+        [Paragraph(f"Oblik<br/>{data.get('oblik', '')}", styleWrap),
+         Paragraph(f"Dužina<br/>{data.get('duzina', '')} m", styleWrap),
+         Paragraph(f"Širina<br/>{data.get('sirina', '')} m", styleWrap),
+         Paragraph(f"Promjer<br/>{data.get('promjer', '')} m", styleWrap)]
+    ]
     char_bottom_table = Table(char_bottom_data, colWidths=[45 * mm, 45 * mm, 45 * mm, 45 * mm], rowHeights=[15 * mm])
     char_bottom_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
-        ('LEFTPADDING', (0, 0), (-1, -1), 3),
-        ('TOPPADDING', (0, 0), (-1, -1), 3)
-    ]))
-
-    # First part of characteristics
-    char_top_data = [
-        [f"Sastav: {dlg.lineEditComposition.text()}", f"Boja(Munsell)\n{dlg.lineEditColor.text()}"],
-        [f"Konzistencija: {dlg.lineEditConsistency.text()}", ""]
-    ]
-    char_top_table = Table(char_top_data, colWidths=[90 * mm, 90 * mm], rowHeights=[10 * mm, 10 * mm])
-    char_top_table.setStyle(TableStyle([
-        ('GRID', (0, 0), (-1, -1), 1, colors.black),
-        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('LEFTPADDING', (0, 0), (-1, -1), 3),
         ('TOPPADDING', (0, 0), (-1, -1), 3)
     ]))
@@ -151,14 +139,12 @@ def export_to_pdf(dlg, iface):
     elements.append(char_top_table)
     elements.append(char_bottom_table)
 
-    # --- OPIS SECTION ---
-    opis_data = [[f"OPIS\n{dlg.textEditDescription.toPlainText()}"]]
+    # --- SEKCIJA OPIS ---
+    opis_data = [[Paragraph(f"<b>OPIS</b><br/>{data.get('opis', '')}", styleWrap)]]
     opis_table = Table(opis_data, colWidths=[180 * mm], rowHeights=[25 * mm])
     opis_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('LEFTPADDING', (0, 0), (-1, -1), 3),
         ('TOPPADDING', (0, 0), (-1, -1), 3)
     ]))
@@ -166,154 +152,121 @@ def export_to_pdf(dlg, iface):
 
     # --- STRATIGRAFSKI ODNOSI ---
     strat_data = [
-        ["STRATIGRAFSKI ODNOSI", "", ""],
-        ["SJ iznad", "000", ""],
-        ["SJ ispod", "020", ""],
-        ["Sječe", "", ""],
-        ["Presječeno od", "", ""],
-        ["Zapunjena sa SJ", "", ""],
-        ["Zapunjava SJ", "", ""],
-        ["Sastavni dio", "", ""],
-        ["Povezana sa SJ", "002", ""],
-        ["Uz", "001", ""],
-        ["Slična s SJ", "", ""]
+        [Paragraph("<b>STRATIGRAFSKI ODNOSI</b>", styleN), "", ""],
+        [Paragraph("SJ iznad", styleN), Paragraph(data.get('odnosi_iznad', ''), styleN), ""],
+        [Paragraph("SJ ispod", styleN), Paragraph(data.get('odnosi_ispod', ''), styleN), ""],
+        [Paragraph("Sječe", styleN), Paragraph(data.get('sjece', ''), styleN), ""],
+        [Paragraph("Presječeno od", styleN), Paragraph(data.get('presjeceno_od', ''), styleN), ""],
+        [Paragraph("Zapunjena sa SJ", styleN), Paragraph(data.get('zapunjena_sa', ''), styleN), ""],
+        [Paragraph("Zapunjava SJ", styleN), Paragraph(data.get('zapunjava', ''), styleN), ""],
+        [Paragraph("Sastavni dio", styleN), Paragraph(data.get('sastavni_dio', ''), styleN), ""],
+        [Paragraph("Povezana sa SJ", styleN), Paragraph(data.get('povezana_sa', ''), styleN), ""],
+        [Paragraph("Uz", styleN), Paragraph(data.get('uz', ''), styleN), ""],
+        [Paragraph("Slična s SJ", styleN), Paragraph(data.get('slicna_s', ''), styleN), ""]
     ]
     strat_table = Table(strat_data, colWidths=[60 * mm, 60 * mm, 60 * mm], rowHeights=[8 * mm] * 11)
     strat_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
-        ('SPAN', (0, 0), (2, 0)),  # Header spans all columns
+        ('SPAN', (0, 0), (2, 0)),
+        ('ALIGN', (0, 0), (2, 0), 'CENTER'),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans'),
-        ('FONTNAME', (0, 0), (2, 0), 'DejaVu-Sans-Bold'),  # Header bold
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('LEFTPADDING', (0, 0), (-1, -1), 3)
     ]))
     elements.append(strat_table)
 
-    # --- NALAZI TABLE ---
+    # --- TABLICA NALAZA ---
+    def get_finding_text(name, check_key, notes_key):
+        checked_char = "X" if data.get(check_key) else "–"
+        notes = data.get(notes_key, '')
+        return Paragraph(f"{name} [{checked_char}]<br/><i>{notes}</i>", styleWrap)
+
     nalazi_data = [
-        ["Keramika N -", "5, 17, 48", "Ostali nalazi:"],
-        ["Opeka    N -", "", ""],
-        ["Ljep     N -", "", "Posebni nalazi:"],
-        ["Staklo   N -", "", "PN -"],
-        ["Metal    N -", "", "Uzorci:"],
-        ["Drvo     U -", "", ""],
-        ["Ugljen   U-", "3", "Napomene:"],
-        ["Kosti    N-", "2, 19, 35", ""]
+        [get_finding_text('Keramika', 'keramika', 'keramika_opis'),
+         Paragraph(f"<b>Ostali nalazi:</b><br/>{data.get('ostali_nalazi', '')}", styleWrap)],
+        [get_finding_text('Opeka', 'opeka', 'opeka_opis'), ""],
+        [get_finding_text('Ljep', 'ljep', 'ljep_opis'),
+         Paragraph(f"<b>Posebni nalazi:</b><br/>{data.get('posebni_nalazi', '')}", styleWrap)],
+        [get_finding_text('Staklo', 'staklo', 'staklo_opis'), ""],
+        [get_finding_text('Metal', 'metal', 'metal_opis'),
+         Paragraph(f"<b>Uzorci:</b><br/>{data.get('uzorci', '')}", styleWrap)],
+        [get_finding_text('Drvo', 'drvo', 'drvo_opis'), ""],
+        [get_finding_text('Ugljen', 'ugljen', 'ugljen_opis'),
+         Paragraph(f"<b>Napomene:</b><br/>{data.get('napomene', '')}", styleWrap)],
+        [get_finding_text('Kosti', 'kosti', 'kosti_opis'), ""]
     ]
 
-    # Create NALAZI as a vertical label
-    nalazi_label_data = [
-        ["N"], ["A"], ["L"], ["A"], ["Z"], ["I"]
-    ]
-    nalazi_label_table = Table(nalazi_label_data, colWidths=[10 * mm], rowHeights=[8 * mm] * 6)
-    nalazi_label_table.setStyle(TableStyle([
-        ('GRID', (0, 0), (-1, -1), 1, colors.black),
-        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans-Bold'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9)
-    ]))
-
-    # Main nalazi table
-    nalazi_main_table = Table(nalazi_data, colWidths=[40 * mm, 40 * mm, 90 * mm], rowHeights=[6 * mm] * 8)
+    nalazi_main_table = Table(nalazi_data, colWidths=[90 * mm, 90 * mm], rowHeights=[12 * mm] * 8)
     nalazi_main_table.setStyle(TableStyle([
-        ('GRID', (0, 0), (-1, -1), 1, colors.black),
-        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
-        ('LEFTPADDING', (0, 0), (-1, -1), 3),
-        ('SPAN', (2, 0), (2, 1)),  # Ostali nalazi spans 2 rows
-        ('SPAN', (2, 2), (2, 3)),  # Posebni nalazi spans 2 rows
-        ('SPAN', (2, 4), (2, 5)),  # Uzorci spans 2 rows
-        ('SPAN', (2, 6), (2, 7))  # Napomene spans 2 rows
+        ('GRID', (0, 0), (-1, -1), 1, colors.black), ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 3), ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('SPAN', (1, 0), (1, 1)), ('SPAN', (1, 2), (1, 3)),
+        ('SPAN', (1, 4), (1, 5)), ('SPAN', (1, 6), (1, 7)),
     ]))
 
-    # Combine label and main table
-    combined_nalazi_data = [
-        [nalazi_label_table, nalazi_main_table]
-    ]
-    combined_nalazi_table = Table(combined_nalazi_data, colWidths=[10 * mm, 170 * mm])
-    combined_nalazi_table.setStyle(TableStyle([
-        ('VALIGN', (0, 0), (-1, -1), 'TOP')
-    ]))
-    elements.append(combined_nalazi_table)
+    elements.append(nalazi_main_table)
 
-    # --- DOCUMENTATION SECTION ---
+    # --- SEKCIJA DOKUMENTACIJA ---
     doc_data = [
-        ["", "Stranica dnevnika\n14", "Arheolog:\nKG"],
-        ["Foto: br.", "Snimio:", ""]
+        [Paragraph(f"Stranica dnevnika<br/>{data.get('dnevnik_str', '')}", styleWrap),
+         Paragraph(f"Arheolog:<br/>{data.get('arheolog', '')}", styleWrap)],
+        [Paragraph(f"Foto: br.<br/>{data.get('foto_br', '')}", styleWrap),
+         Paragraph(f"Snimio:<br/>{data.get('snimio', '')}", styleWrap)]
     ]
-    doc_table = Table(doc_data, colWidths=[60 * mm, 60 * mm, 60 * mm], rowHeights=[15 * mm, 10 * mm])
+    doc_table = Table(doc_data, colWidths=[90 * mm, 90 * mm], rowHeights=[15 * mm, 15 * mm])
     doc_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('LEFTPADDING', (0, 0), (-1, -1), 3),
         ('TOPPADDING', (0, 0), (-1, -1), 3)
     ]))
     elements.append(doc_table)
 
-    elements.append(Spacer(1, 10 * mm))
+    elements.append(Spacer(1, 5 * mm))
 
     # --- FOOTER ---
     footer_text = "Ministarstvo kulture, Uprava za zaštitu kulturne baštine, Odjel za arheološku baštinu"
-    footer_para = Paragraph(footer_text, styleSmall)
-    elements.append(footer_para)
+    elements.append(Paragraph(footer_text, styleSmall))
 
-    # --- PAGE BREAK FOR SKETCHES ---
+    # --- PRIJELOM STRANICE ZA SKICE ---
     elements.append(PageBreak())
 
-    # --- PAGE 2: SKETCHES ---
-    # SJ box on second page
-    elements.append(Table([["SJ"]], colWidths=[20 * mm], rowHeights=[15 * mm],
+    # --- STRANICA 2: SKICE ---
+    sj_val = data.get('SJ_br', '')
+    elements.append(Table([[f"SJ\n{sj_val}"]], colWidths=[20 * mm], rowHeights=[15 * mm],
                           style=[('GRID', (0, 0), (-1, -1), 1, colors.black),
                                  ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
                                  ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
                                  ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans-Bold')]))
+    elements.append(Spacer(1, 2 * mm))
 
-    # First sketch section
-    sketch1_data = [["SKICA STRATIGRAFSKE JEDINICE"]]
+    sketch1_data = [[Paragraph("SKICA STRATIGRAFSKE JEDINICE", styleN)]]
     sketch1_table = Table(sketch1_data, colWidths=[180 * mm], rowHeights=[100 * mm])
     sketch1_table.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'TOP'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans-Bold'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
-        ('LEFTPADDING', (0, 0), (-1, -1), 3),
-        ('TOPPADDING', (0, 0), (-1, -1), 3)
+        ('LEFTPADDING', (0, 0), (-1, -1), 3), ('TOPPADDING', (0, 0), (-1, -1), 3)
     ]))
     elements.append(sketch1_table)
-
     elements.append(Spacer(1, 5 * mm))
 
-    # Second sketch section with grid
-    sketch2_data = [["SKICA POLOŽAJA STRATIGRAFSKE JEDINICE U SONDI / KVADRANTU"]]
+    sketch2_data = [[Paragraph("SKICA POLOŽAJA STRATIGRAFSKE JEDINICE U SONDI / KVADRANTU", styleN)]]
     sketch2_header = Table(sketch2_data, colWidths=[180 * mm], rowHeights=[8 * mm])
     sketch2_header.setStyle(TableStyle([
         ('GRID', (0, 0), (-1, -1), 1, colors.black),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
-        ('FONTNAME', (0, 0), (-1, -1), 'DejaVu-Sans-Bold'),
-        ('FONTSIZE', (0, 0), (-1, -1), 9),
         ('LEFTPADDING', (0, 0), (-1, -1), 3)
     ]))
     elements.append(sketch2_header)
 
-    # Grid for the sketch (6x4 grid as shown in image)
     grid_data = [["" for _ in range(6)] for _ in range(4)]
     grid_table = Table(grid_data, colWidths=[30 * mm] * 6, rowHeights=[20 * mm] * 4)
-    grid_table.setStyle(TableStyle([
-        ('GRID', (0, 0), (-1, -1), 1, colors.black)
-    ]))
+    grid_table.setStyle(TableStyle([('GRID', (0, 0), (-1, -1), 1, colors.black)]))
     elements.append(grid_table)
+    elements.append(Spacer(1, 5 * mm))
 
-    elements.append(Spacer(1, 10 * mm))
-
-    # Footer on second page
     elements.append(Paragraph(footer_text, styleSmall))
 
-    # Build the PDF
+    # --- BUILD DOKUMENTA ---
     try:
         doc.build(elements)
         iface.messageBar().pushMessage("Uspjeh", f"PDF spremljen: {fileName}", level=0, duration=4)
