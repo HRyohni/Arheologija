@@ -22,7 +22,6 @@
       border-radius: 6px;
       margin-top: 12px;
       padding-top: 10px;
-     background-color: #e0e0e0;
     }
     QGroupBox::title {
       subcontrol-origin: margin;
@@ -44,9 +43,7 @@
       padding: 6px 12px;
       font-weight: bold;
     }
-    QLabel:hover {
-      color: red;
-    }
+
     QPushButton:hover {
       background-color: #3498db;
     }

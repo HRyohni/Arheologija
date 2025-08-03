@@ -72,15 +72,22 @@ class ArheologijaPlus:
         self.dock_widget.show()
 
     def populate_form_from_selection(self):
-        if not self.target_layer: return
+        if not self.target_layer:
+            return
         selected_features = self.target_layer.selectedFeatures()
         if len(selected_features) == 1:
             feature = selected_features[0]
             data = {field.name(): feature.attribute(field.name()) for field in self.target_layer.fields()}
             if self.dialog:
-                self.dialog.set_data(data)
+                # Check if the feature has existing data, specifically 'SJ_br'
+                # If 'SJ_br' is None or 0, it indicates an empty record.
+                if data.get('SJ_br') is None or data.get('SJ_br') == 0:
+                    self.dialog.clear_data()
+                else:
+                    self.dialog.set_data(data)
         else:
-            pass
+            if self.dialog:
+                self.dialog.clear_data()
 
     def save_data_to_layer(self):
         if not self.target_layer:
@@ -119,7 +126,16 @@ class ArheologijaPlus:
 
     def exportToPdf(self):
         if self.dialog:
-            export_to_pdf(self.dialog, self.iface)
+            selected_features = self.target_layer.selectedFeatures()
+            if not selected_features:
+                self.iface.messageBar().pushMessage("Upozorenje", "Molimo odaberite poligon za izvoz.", level=2, duration=4)
+                return
+            if len(selected_features) > 1:
+                self.iface.messageBar().pushMessage("Upozorenje", "Molimo odaberite samo jedan poligon za izvoz.", level=2, duration=4)
+                return
+
+            selected_feature = selected_features[0]
+            export_to_pdf(self.dialog, self.iface, selected_feature)
 
     def setup_database_layer(self):
         layer_name = 'Stratigrafske_Jedinice'
