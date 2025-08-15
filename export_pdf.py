@@ -14,10 +14,7 @@ from PyQt5.QtCore import QSize
 
 
 def _export_map_image(iface, feature):
-    """
-    Exports a map image of the selected feature.
-    Returns the path to the temporary image file or None on failure.
-    """
+
     map_canvas = iface.mapCanvas()
     if map_canvas is None:
         return None
@@ -62,10 +59,7 @@ def _export_map_image(iface, feature):
 
 
 def export_to_pdf(dlg, iface, selected_feature):
-    """
-    Izvozi podatke o arheološkoj stratigrafskoj jedinici u PDF dokument,
-    kombinirajući dinamičko dohvaćanje podataka s točnim vizualnim rasporedom.
-    """
+
     # --- DOHVATI SVE PODATKE IZ DIJALOGA ---
     data = dlg.get_data()
 
@@ -281,6 +275,10 @@ def export_to_pdf(dlg, iface, selected_feature):
         # --- PRIJELOM STRANICE ZA SKICE ---
         elements.append(PageBreak())
 
+
+        opis_priloga_text = data.get('opis_priloga', '')
+        elements.append(Paragraph(f"<b>Opis Priloga:</b><br/>{opis_priloga_text}", styleN))
+        elements.append(Spacer(1, 2 * mm))
 
         elements.append(Paragraph("SKICA STRATIGRAFSKE JEDINICE", styleN))
         elements.append(Spacer(1, 2 * mm))

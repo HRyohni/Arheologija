@@ -70,6 +70,7 @@ class ArheologijaPlusDialog(QWidget, FORM_CLASS):
             'arheolog': self.lineEditArchaeologist.text(),
             'snimio': self.lineEditPhotographer.text(),
             'napomene': self.textEditNotes.toPlainText(),
+            'opis_priloga': self.textEditAnnexDescription.toPlainText(),
         }
         return data
 
@@ -133,6 +134,7 @@ class ArheologijaPlusDialog(QWidget, FORM_CLASS):
         self.lineEditArchaeologist.setText(data.get('arheolog') or '')
         self.lineEditPhotographer.setText(data.get('snimio') or '')
         self.textEditNotes.setPlainText(data.get('napomene') or '')
+        self.textEditAnnexDescription.setPlainText(data.get('opis_priloga') or '')
 
     def clear_data(self):
         """Čisti sve unose u UI-u."""
@@ -188,3 +190,4 @@ class ArheologijaPlusDialog(QWidget, FORM_CLASS):
         self.lineEditArchaeologist.setText('')
         self.lineEditPhotographer.setText('')
         self.textEditNotes.setPlainText('')
+        self.textEditAnnexDescription.setPlainText('')

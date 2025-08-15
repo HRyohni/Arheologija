@@ -15,38 +15,39 @@
   </property>
   <property name="styleSheet">
    <string notr="true">
-    QDialog { background-color: #f5f5f5; }
+    QDialog { background-color: #f5f5f5;
+ }
     QGroupBox {
       font-weight: bold;
       border: 1px solid #cccccc;
       border-radius: 6px;
-      margin-top: 12px;
+ margin-top: 12px;
       padding-top: 10px;
     }
     QGroupBox::title {
       subcontrol-origin: margin;
       left: 10px;
-      padding: 0 5px 0 5px;
+ padding: 0 5px 0 5px;
     }
     QLabel {
       font-size: 11pt;
-    }
+ }
     QLineEdit, QTextEdit, QComboBox, QSpinBox, QDoubleSpinBox {
       border: 1px solid #aaaaaa;
-      border-radius: 4px;
+ border-radius: 4px;
       padding: 5px;
     }
     QPushButton {
       background-color: #2980b9;
       color: white;
-      border-radius: 4px;
+ border-radius: 4px;
       padding: 6px 12px;
       font-weight: bold;
     }
 
     QPushButton:hover {
       background-color: #3498db;
-    }
+ }
    </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -63,7 +64,7 @@
        <item>
         <widget class="QGroupBox" name="groupBoxIdentification">
          <property name="title">
-          <string>Identification</string>
+         <string>Identification</string>
          </property>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
@@ -71,7 +72,7 @@
             <property name="text">
              <string>Stratigrafska Jedinica Br.:</string>
             </property>
-           </widget>
+            </widget>
           </item>
           <item row="0" column="1">
            <widget class="QSpinBox" name="spinBoxSJNumber">
@@ -271,7 +272,7 @@
             <item>
              <property name="text">
               <string>četvrtasti</string>
-             </property>
+            </property>
             </item>
            </widget>
           </item>
@@ -787,6 +788,23 @@
           </item>
           <item row="2" column="1" colspan="3">
            <widget class="QTextEdit" name="textEditNotes">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>80</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="labelAnnexDescription">
+            <property name="text">
+             <string>Opis Priloga:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1" colspan="3">
+           <widget class="QTextEdit" name="textEditAnnexDescription">
             <property name="maximumSize">
              <size>
               <width>16777215</width>

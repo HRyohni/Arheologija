@@ -185,6 +185,7 @@ class ArheologijaPlus:
             QgsField('uzorci', QVariant.String), QgsField('dnevnik_str', QVariant.Int),
             QgsField('foto_br', QVariant.String), QgsField('arheolog', QVariant.String),
             QgsField('snimio', QVariant.String), QgsField('napomene', QVariant.String),
+            QgsField('opis_priloga', QVariant.String),
         ]
 
         qgs_fields = QgsFields()
