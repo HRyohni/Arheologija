@@ -47,7 +47,7 @@ Plugin slijedi standardnu QGIS strukturu i sastoji se od nekoliko ključnih dato
 
 Rad plugina temelji se na interakciji između QGIS-a i prilagođenog sučelja. Kada korisnik odabere poligon na karti, plugin automatski učitava njegove atribute u formu. Nakon unosa ili izmjene, podaci se spremaju natrag u atributnu tablicu GeoPackage sloja.
 
-![Prikaz dijela sučelja plugina]([https://i.imgur.com/GzB0LdF.png](https://media.discordapp.net/attachments/913822778988331009/1412205422286213262/image.png?ex=68b7724a&is=68b620ca&hm=07c7b3b0a3148dcb987a8f6b7620fcfc7a7e0f8adc8cace2d0055f99b731f7e7&=&format=webp&quality=lossless&width=841&height=960)
+![Prikaz dijela sučelja plugina]([https://i.imgur.com/GzB0LdF.png](https://media.discordapp.net/attachments/913822778988331009/1412205422286213262/image.png?ex=68b7724a&is=68b620ca&hm=07c7b3b0a3148dcb987a8f6b7620fcfc7a7e0f8adc8cace2d0055f99b731f7e7&=&format=webp&quality=lossless&width=841&height=960))
 *Slika 1: Prikaz korisničkog sučelja plugina unutar QGIS-a*
 
 ### **4. Funkcionalnosti**
