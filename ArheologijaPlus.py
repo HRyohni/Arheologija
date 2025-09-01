@@ -79,8 +79,6 @@ class ArheologijaPlus:
             feature = selected_features[0]
             data = {field.name(): feature.attribute(field.name()) for field in self.target_layer.fields()}
             if self.dialog:
-                # Check if the feature has existing data, specifically 'SJ_br'
-                # If 'SJ_br' is None or 0, it indicates an empty record.
                 if data.get('SJ_br') is None or data.get('SJ_br') == 0:
                     self.dialog.clear_data()
                 else:

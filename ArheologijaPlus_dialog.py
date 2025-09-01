@@ -9,14 +9,12 @@ FORM_CLASS, _ = uic.loadUiType(os.path.join(os.path.dirname(__file__), 'Arheolog
 
 class ArheologijaPlusDialog(QWidget, FORM_CLASS):
     def __init__(self, parent=None):
-        """Konstruktor."""
         super(ArheologijaPlusDialog, self).__init__(parent)
         self.setupUi(self)
         self.dateEdit.setDate(QDate.currentDate())
 
 
     def get_data(self):
-        """Vraća rječnik s podacima iz UI-a. Ključevi odgovaraju imenima polja u bazi."""
         data = {
             'SJ_br': self.spinBoxSJNumber.value(),
             'SJ_vrsta': self.comboBoxSJType.currentText(),
