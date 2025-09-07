@@ -13,7 +13,7 @@ from qgis.core import QgsRectangle, QgsProject, QgsLayout, QgsLayoutItemMap, Qgs
 from PyQt5.QtCore import QSize
 
 
-def _export_map_image(iface, feature):
+def _export_image(iface, feature):
 
     map_canvas = iface.mapCanvas()
     if map_canvas is None:
@@ -22,22 +22,22 @@ def _export_map_image(iface, feature):
     layout = QgsLayout(QgsProject.instance())
     layout.initializeDefaults()
 
-    map_item = QgsLayoutItemMap(layout)
+    item = QgsLayoutItemMap(layout)
 
-    map_item.setRect(0, 0, 180, 100)
+    item.setRect(0, 0, 180, 100)
 
     bbox = feature.geometry().boundingBox()
     bbox.scale(1.2)
-    map_item.setExtent(bbox)
+    item.setExtent(bbox)
 
     layers_to_render = iface.mapCanvas().layers()
 
-    map_item.setLayers(layers_to_render)
+    item.setLayers(layers_to_render)
 
-    layout.addLayoutItem(map_item)
+    layout.addLayoutItem(item)
 
-    map_item.setBackgroundEnabled(True)
-    map_item.setFrameEnabled(True)
+    item.setBackgroundEnabled(True)
+    item.setFrameEnabled(True)
 
     image_path = os.path.join(tempfile.gettempdir(), f"temp_sketch_{os.getpid()}.png")
 
@@ -274,7 +274,7 @@ def export_to_pdf(dlg, iface, selected_feature):
         elements.append(Paragraph("SKICA STRATIGRAFSKE JEDINICE", styleN))
         elements.append(Spacer(1, 2 * mm))
 
-        image_path = _export_map_image(iface, selected_feature)
+        image_path = _export_image(iface, selected_feature)
         if image_path:
             image_width = 180 * mm
             img = ReportLabImage(image_path, width=image_width, height=100 * mm)
